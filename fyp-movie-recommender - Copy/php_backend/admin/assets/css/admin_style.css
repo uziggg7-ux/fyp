@@ -1,0 +1,197 @@
+/* admin_style.css - Global Admin Dark Theme */
+
+:root {
+    --bg-admin-dark: #0a0a0a;
+    --bg-admin-sidebar: #050505;
+    --bg-admin-card: #111111;
+    --accent-red: #FF0000;
+    --border-dim: 1px solid #1a1a1a;
+    --text-muted: #888888;
+    --sidebar-width: 260px;
+    --sidebar-collapsed-width: 0px;
+}
+
+body.admin-body {
+    background-color: var(--bg-admin-dark);
+    color: #ffffff;
+    font-family: 'Inter', sans-serif;
+    overflow-x: hidden;
+}
+
+/* --- Sidebar Styling --- */
+.admin-sidebar {
+    width: var(--sidebar-width);
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    z-index: 1000;
+    background: var(--bg-admin-sidebar);
+    color: #fff;
+    transition: all 0.3s ease;
+    border-right: var(--border-dim);
+    display: flex;
+    flex-direction: column;
+}
+
+.admin-sidebar.active {
+    margin-left: calc(-1 * var(--sidebar-width));
+}
+
+@media (max-width: 768px) {
+    .admin-sidebar {
+        margin-left: calc(-1 * var(--sidebar-width));
+    }
+    .admin-sidebar.active {
+        margin-left: 0;
+    }
+}
+
+.sidebar-header {
+    padding: 30px 25px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo-text {
+    font-weight: 800;
+    letter-spacing: -0.5px;
+    margin: 0;
+}
+
+.logo-text span {
+    color: var(--accent-red);
+}
+
+.logo-text small {
+    font-size: 0.6rem;
+    background: var(--accent-red);
+    color: #fff;
+    padding: 2px 6px;
+    border-radius: 2px;
+    vertical-align: middle;
+    margin-left: 5px;
+}
+
+.admin-sidebar ul.components {
+    padding: 20px 0;
+    flex-grow: 1;
+}
+
+.admin-sidebar ul li a {
+    padding: 15px 25px;
+    font-size: 0.9rem;
+    display: block;
+    color: var(--text-muted);
+    text-decoration: none;
+    transition: all 0.3s;
+    font-weight: 500;
+    border-left: 3px solid transparent;
+}
+
+.admin-sidebar ul li a i {
+    margin-right: 15px;
+    font-size: 1.1rem;
+}
+
+.admin-sidebar ul li a:hover,
+.admin-sidebar ul li.active > a {
+    color: #fff;
+    background: rgba(255, 0, 0, 0.05);
+    border-left-color: var(--accent-red);
+}
+
+.sidebar-footer {
+    padding: 20px 25px;
+    border-top: var(--border-dim);
+}
+
+.btn-logout-admin {
+    color: var(--text-muted);
+    text-decoration: none;
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    transition: color 0.3s;
+}
+
+.btn-logout-admin:hover {
+    color: var(--accent-red);
+}
+
+.btn-logout-admin i {
+    margin-right: 10px;
+}
+
+/* --- Content Area --- */
+.admin-main-content {
+    width: calc(100% - var(--sidebar-width));
+    float: right;
+    transition: all 0.3s;
+    min-height: 100vh;
+}
+
+.admin-sidebar.active + .admin-main-content {
+    width: 100%;
+}
+
+@media (max-width: 768px) {
+    .admin-main-content {
+        width: 100%;
+    }
+}
+
+/* --- Topbar --- */
+.admin-topbar {
+    background: rgba(10, 10, 10, 0.8);
+    backdrop-filter: blur(10px);
+    border-bottom: var(--border-dim);
+    padding: 15px 25px;
+}
+
+.btn-tech-toggle {
+    background: transparent;
+    border: none;
+    color: #fff;
+    font-size: 1.5rem;
+    padding: 0;
+}
+
+.admin-profile-pill {
+    background: #111;
+    border: var(--border-dim);
+    padding: 8px 18px;
+    border-radius: 50px;
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+/* --- Global Utilities --- */
+.premium-card {
+    background: var(--bg-admin-card);
+    border: var(--border-dim);
+    border-radius: 4px;
+    padding: 25px;
+    height: 100%;
+    transition: transform 0.3s ease;
+}
+
+.premium-card:hover {
+    border-color: #333;
+}
+
+.section-tag {
+    color: var(--accent-red);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-weight: 700;
+    font-size: 0.75rem;
+    display: block;
+    margin-bottom: 5px;
+}
+
+.admin-page-title {
+    font-weight: 800;
+    margin-bottom: 1.5rem;
+}
