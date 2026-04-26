@@ -1,0 +1,102 @@
+/* admin_dashboard.css - Specific Dashboard Elements */
+
+.stat-card {
+    position: relative;
+    overflow: hidden;
+    padding: 25px;
+}
+
+.stat-card .icon-bg {
+    position: absolute;
+    right: -10px;
+    bottom: -10px;
+    font-size: 5rem;
+    opacity: 0.05;
+    color: var(--accent-red);
+    transform: rotate(-15deg);
+}
+
+.stat-card .stat-value {
+    font-size: 2.2rem;
+    font-weight: 800;
+    margin-bottom: 0;
+    color: #fff;
+}
+
+.stat-card .stat-label {
+    color: var(--text-muted);
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    font-weight: 600;
+}
+
+.chart-container {
+    background: #111;
+    border: 1px solid #1a1a1a;
+    padding: 25px;
+    border-radius: 4px;
+    margin-bottom: 30px;
+}
+
+.chart-title {
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 25px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    display: flex;
+    align-items: center;
+}
+
+.chart-title i {
+    color: var(--accent-red);
+    margin-right: 10px;
+}
+
+/* Custom table styling for recent activity */
+.admin-table-simple {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0 8px;
+}
+
+.admin-table-simple tr {
+    background: #151515;
+    transition: background 0.3s;
+}
+
+.admin-table-simple tr:hover {
+    background: #1a1a1a;
+}
+
+.admin-table-simple td {
+    padding: 15px;
+    font-size: 0.85rem;
+    color: var(--text-muted);
+}
+
+.admin-table-simple td:first-child {
+    border-top-left-radius: 4px;
+    border-bottom-left-radius: 4px;
+}
+
+.admin-table-simple td:last-child {
+    border-top-right-radius: 4px;
+    border-bottom-right-radius: 4px;
+}
+
+.mood-badge {
+    padding: 4px 10px;
+    border-radius: 2px;
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.mood-happy { background: rgba(0, 255, 0, 0.1); color: #00FF00; }
+.mood-sad { background: rgba(0, 0, 255, 0.1); color: #5555FF; }
+.mood-angry { background: rgba(255, 0, 0, 0.1); color: #FF0000; }
+.mood-excited { background: rgba(255, 255, 0, 0.1); color: #FFFF00; }
+.mood-neutral { background: rgba(255, 255, 255, 0.1); color: #FFFFFF; }
