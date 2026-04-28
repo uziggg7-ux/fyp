@@ -1,0 +1,90 @@
+/* admin_tables.css - Clean & Modern Data Tables */
+
+.admin-table-container {
+    background: var(--bg-admin-card);
+    backdrop-filter: blur(10px);
+    border: var(--border-glass);
+    border-radius: 20px;
+    padding: 30px;
+    box-shadow: var(--glass-shadow);
+}
+
+.table-premium {
+    color: var(--text-white);
+    border: none;
+    margin-bottom: 0;
+}
+
+.table-premium thead th {
+    background: transparent;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    font-size: 0.65rem;
+    letter-spacing: 2px;
+    font-weight: 800;
+    padding: 15px 20px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.table-premium tbody td {
+    padding: 20px;
+    vertical-align: middle;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+    font-size: 0.9rem;
+    color: var(--text-muted);
+}
+
+.table-premium tbody tr {
+    transition: var(--transition-standard);
+}
+
+.table-premium tbody tr:hover {
+    background: rgba(255, 255, 255, 0.02);
+}
+
+/* User Action Buttons */
+.btn-action {
+    width: 38px;
+    height: 38px;
+    background: rgba(255, 255, 255, 0.03);
+    border: var(--border-glass);
+    border-radius: 10px;
+    color: var(--text-muted);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: var(--transition-standard);
+    text-decoration: none;
+}
+
+.btn-action:hover {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(255, 255, 255, 0.2);
+    color: #fff;
+    transform: translateY(-2px);
+}
+
+.btn-action-delete:hover {
+    background: rgba(255, 59, 59, 0.1);
+    border-color: rgba(255, 59, 59, 0.3);
+    color: var(--accent-red);
+}
+
+/* Search Box Styling */
+.table-search-box {
+    background: rgba(255, 255, 255, 0.03);
+    border: var(--border-glass);
+    color: #fff;
+    padding: 12px 25px;
+    border-radius: 14px;
+    font-size: 0.85rem;
+    width: 300px;
+    transition: var(--transition-standard);
+}
+
+.table-search-box:focus {
+    outline: none;
+    background: rgba(255, 255, 255, 0.05);
+    border-color: var(--accent-red);
+    box-shadow: 0 0 15px rgba(255, 59, 59, 0.1);
+}
