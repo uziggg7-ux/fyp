@@ -73,30 +73,42 @@ $method_values = array_values($method_data);
     <div class="row g-4 mb-5">
         <div class="col-md-3" data-aos="fade-up" data-aos-delay="100">
             <div class="premium-card stat-card">
-                <i class="bi bi-people icon-bg"></i>
-                <div class="stat-label">Total Users</div>
-                <div class="stat-value"><?php echo number_format($total_users); ?></div>
+                <div class="icon-wrapper"><i class="bi bi-people"></i></div>
+                <div>
+                    <div class="stat-label">Total Users</div>
+                    <div class="stat-value"><?php echo number_format($total_users); ?></div>
+                </div>
+                <div class="stat-trend trend-up"><i class="bi bi-graph-up me-1"></i> System Growth</div>
             </div>
         </div>
         <div class="col-md-3" data-aos="fade-up" data-aos-delay="200">
             <div class="premium-card stat-card">
-                <i class="bi bi-activity icon-bg"></i>
-                <div class="stat-label">Mood Scans</div>
-                <div class="stat-value"><?php echo number_format($total_detections); ?></div>
+                <div class="icon-wrapper"><i class="bi bi-activity"></i></div>
+                <div>
+                    <div class="stat-label">Mood Scans</div>
+                    <div class="stat-value"><?php echo number_format($total_detections); ?></div>
+                </div>
+                <div class="stat-trend trend-up"><i class="bi bi-cpu me-1"></i> Neural Activity</div>
             </div>
         </div>
         <div class="col-md-3" data-aos="fade-up" data-aos-delay="300">
             <div class="premium-card stat-card">
-                <i class="bi bi-heart icon-bg"></i>
-                <div class="stat-label">Total Favorites</div>
-                <div class="stat-value"><?php echo number_format($total_favorites); ?></div>
+                <div class="icon-wrapper"><i class="bi bi-heart"></i></div>
+                <div>
+                    <div class="stat-label">Total Favorites</div>
+                    <div class="stat-value"><?php echo number_format($total_favorites); ?></div>
+                </div>
+                <div class="stat-trend trend-up"><i class="bi bi-star me-1"></i> User Engagement</div>
             </div>
         </div>
         <div class="col-md-3" data-aos="fade-up" data-aos-delay="400">
             <div class="premium-card stat-card">
-                <i class="bi bi-database icon-bg"></i>
-                <div class="stat-label">Cached Movies</div>
-                <div class="stat-value"><?php echo number_format($cache_count); ?></div>
+                <div class="icon-wrapper"><i class="bi bi-database"></i></div>
+                <div>
+                    <div class="stat-label">Cached Movies</div>
+                    <div class="stat-value"><?php echo number_format($cache_count); ?></div>
+                </div>
+                <div class="stat-trend text-muted"><i class="bi bi-hdd-network me-1"></i> Local Storage</div>
             </div>
         </div>
     </div>
@@ -145,37 +157,30 @@ $method_values = array_values($method_data);
                 <h5 class="text-white fw-bold"><i class="bi bi-clock-history me-2 text-danger"></i> Recent Global Detections</h5>
                 <a href="logs.php" class="text-muted small text-decoration-none">View All Logs <i class="bi bi-arrow-right"></i></a>
             </div>
-            <div class="table-responsive">
-                <table class="admin-table-simple">
-                    <tbody>
-                        <?php if (empty($recent_activity)): ?>
-                            <tr>
-                                <td colspan="4" class="text-center py-5">No recent activity detected in the system.</td>
-                            </tr>
-                        <?php else: ?>
-                            <?php foreach ($recent_activity as $row): ?>
-                                <tr>
-                                    <td style="width: 50px;"><i class="bi bi-person-circle fs-5"></i></td>
-                                    <td>
-                                        <div class="fw-bold text-white"><?php echo htmlspecialchars($row['username']); ?></div>
-                                        <div class="small">User ID: #<?php echo $row['user_id']; ?></div>
-                                    </td>
-                                    <td>
-                                        <span class="mood-badge mood-<?php echo strtolower($row['mood']); ?>">
-                                            <?php echo htmlspecialchars($row['mood']); ?>
-                                        </span>
-                                    </td>
-                                    <td>
-                                        <div class="small text-muted">via <?php echo strtoupper($row['input_type']); ?></div>
-                                    </td>
-                                    <td class="text-end">
-                                        <div class="small"><?php echo date('M d, H:i', strtotime($row['detected_at'])); ?></div>
-                                    </td>
-                                </tr>
-                            <?php endforeach; ?>
-                        <?php endif; ?>
-                    </tbody>
-                </table>
+            <div class="activity-feed">
+                <?php if (empty($recent_activity)): ?>
+                    <div class="premium-card text-center py-5">No recent activity detected.</div>
+                <?php else: ?>
+                    <?php foreach ($recent_activity as $row): ?>
+                        <div class="activity-item d-flex align-items-center justify-content-between">
+                            <div class="d-flex align-items-center">
+                                <div class="icon-wrapper me-3" style="width: 40px; height: 40px; background: rgba(255,255,255,0.05); border-radius: 10px; display: flex; align-items: center; justify-content: center;">
+                                    <i class="bi bi-person text-muted"></i>
+                                </div>
+                                <div>
+                                    <div class="text-white fw-bold small"><?php echo htmlspecialchars($row['username']); ?></div>
+                                    <div class="text-muted" style="font-size: 0.65rem;">User ID: #<?php echo $row['user_id']; ?> • via <?php echo strtoupper($row['input_type']); ?></div>
+                                </div>
+                            </div>
+                            <div class="text-end">
+                                <span class="mood-badge-refined mood-<?php echo strtolower($row['mood']); ?>">
+                                    <?php echo htmlspecialchars($row['mood']); ?>
+                                </span>
+                                <div class="text-muted mt-1" style="font-size: 0.6rem;"><?php echo date('H:i', strtotime($row['detected_at'])); ?></div>
+                            </div>
+                        </div>
+                    <?php endforeach; ?>
+                <?php endif; ?>
             </div>
         </div>
     </div>
