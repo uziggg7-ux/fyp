@@ -28,10 +28,16 @@ $recommended_movies = [];
 $api_error = null;
 $data_source = "Live Cloud";
 
+// --- FETCH CUSTOM SETTINGS ---
+$stmt_settings = $pdo->query("SELECT setting_key, setting_value FROM system_settings");
+$app_settings = $stmt_settings->fetchAll(PDO::FETCH_KEY_PAIR);
+$api_key = !empty($app_settings['tmdb_api_key']) ? $app_settings['tmdb_api_key'] : TMDB_API_KEY;
+$rec_limit = !empty($app_settings['rec_count']) ? (int)$app_settings['rec_count'] : 10;
+
 // --- CALL TMDB API ---
 $endpoint = TMDB_BASE_URL . 'discover/movie';
 $params = [
-    'api_key' => TMDB_API_KEY,
+    'api_key' => $api_key,
     'with_genres' => $target_genre_id,
     'sort_by' => $current_sort,
     'language' => 'en-US',
@@ -66,7 +72,11 @@ if ($http_code === 200 && $response) {
     $data = json_decode($response, true);
     $results = $data['results'] ?? [];
 
+    $count = 0;
     foreach ($results as $movie) {
+        if ($count >= $rec_limit) break;
+        $count++;
+
         $poster_path = !empty($movie['poster_path'])
             ? 'https://image.tmdb.org/t/p/w500' . $movie['poster_path']
             : 'assets/img/no_poster.jpg';
@@ -274,12 +284,20 @@ set_page_title("Recommended Movies - MoodAI Rec.");
                                             <i class="bi bi-shield-lock me-1"></i> LOGIN TO SAVE
                                         </button>
                                     <?php else: ?>
-                                        <button class="btn btn-sync favorite-btn"
-                                                data-movie-id="<?php echo htmlspecialchars($movie['id']); ?>"
-                                                data-movie-title="<?php echo htmlspecialchars($movie['title']); ?>"
-                                                data-movie-poster="<?php echo htmlspecialchars($movie['poster_path']); ?>">
-                                            <i class="bi bi-heart me-1"></i> SAVE TO FAVORITES
-                                        </button>
+                                        <div class="d-flex gap-2">
+                                            <button class="btn btn-sync favorite-btn flex-grow-1"
+                                                    data-movie-id="<?php echo htmlspecialchars($movie['id']); ?>"
+                                                    data-movie-title="<?php echo htmlspecialchars($movie['title']); ?>"
+                                                    data-movie-poster="<?php echo htmlspecialchars($movie['poster_path']); ?>">
+                                                <i class="bi bi-heart"></i>
+                                            </button>
+                                            <button class="btn btn-outline-premium feedback-btn" data-id="<?php echo $movie['id']; ?>" data-type="like">
+                                                <i class="bi bi-hand-thumbs-up"></i>
+                                            </button>
+                                            <button class="btn btn-outline-secondary feedback-btn" data-id="<?php echo $movie['id']; ?>" data-type="dislike">
+                                                <i class="bi bi-hand-thumbs-down"></i>
+                                            </button>
+                                        </div>
                                     <?php endif; ?>
                                 </div>
                             </div>

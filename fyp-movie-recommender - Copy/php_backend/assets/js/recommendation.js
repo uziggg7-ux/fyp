@@ -24,6 +24,35 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
 
+        movieGrid.addEventListener('click', function(e) {
+            const feedbackBtn = e.target.closest('.feedback-btn');
+            if (feedbackBtn) {
+                const movieId = feedbackBtn.getAttribute('data-id');
+                const type = feedbackBtn.getAttribute('data-type');
+                sendFeedback(movieId, type, feedbackBtn);
+            }
+        });
+
+        async function sendFeedback(movieId, type, button) {
+            try {
+                const response = await fetch('api/feedback_api.php', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ movie_id: movieId, type: type })
+                });
+                const result = await response.json();
+                if (result.success) {
+                    showToast('Feedback Received', `You ${type}d this movie!`, 'success');
+                    // Toggle active state
+                    const card = button.closest('.movie-card');
+                    card.querySelectorAll('.feedback-btn').forEach(b => b.classList.remove('active'));
+                    button.classList.add('active');
+                }
+            } catch (error) {
+                showToast('Error', 'Failed to save feedback.', 'danger');
+            }
+        }
+
         // Initial staggered fade-in animation
         document.querySelectorAll('.movie-card-col').forEach((card, index) => {
             card.style.animationDelay = `${0.05 * index}s`;
