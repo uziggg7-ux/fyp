@@ -51,6 +51,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     echo json_encode(['success' => false, 'message' => $error_message]);
                     exit();
                  }
+            } elseif (isset($user['is_banned']) && $user['is_banned']) {
+                $error_message = "Your account has been suspended by the administrator.";
+                if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && $_SERVER['HTTP_X_REQUESTED_WITH'] === 'XMLHttpRequest') {
+                    header('Content-Type: application/json');
+                    echo json_encode(['success' => false, 'message' => $error_message]);
+                    exit();
+                }
             } else {
                 $_SESSION['user_id'] = $user['user_id'];
                 $_SESSION['username'] = $user['username'];

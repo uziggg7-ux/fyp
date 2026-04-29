@@ -1,0 +1,104 @@
+:root {
+    --accent-red: #FF0000;
+    --deep-red: #950101;
+    --dark-bg: #000000;
+    --card-bg: #0a0a0a;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+}
+
+.admin-sidebar {
+    width: 280px;
+    min-height: 100vh;
+    background: var(--card-bg);
+}
+
+.logo-text {
+    color: white;
+    letter-spacing: -1px;
+}
+
+.logo-text span {
+    color: var(--accent-red);
+}
+
+.nav-link {
+    border-radius: 8px;
+    transition: 0.3s;
+    padding: 12px 15px;
+}
+
+.nav-link:hover {
+    background: rgba(255, 0, 0, 0.1);
+    color: var(--accent-red) !important;
+}
+
+.nav-link i {
+    font-size: 1.2rem;
+}
+
+.premium-card {
+    background: var(--card-bg);
+    border: 1px solid #1a1a1a;
+    border-radius: 12px;
+    padding: 20px;
+    transition: 0.3s;
+}
+
+.premium-card:hover {
+    border-color: var(--accent-red);
+}
+
+.section-title {
+    font-weight: 800;
+    letter-spacing: -1px;
+    margin-bottom: 30px;
+}
+
+.btn-premium {
+    background: var(--accent-red);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-weight: 600;
+    transition: 0.3s;
+}
+
+.btn-premium:hover {
+    background: var(--deep-red);
+    color: white;
+    box-shadow: 0 0 15px rgba(255, 0, 0, 0.4);
+}
+
+.btn-outline-premium {
+    background: transparent;
+    border: 1px solid var(--accent-red);
+    color: var(--accent-red);
+}
+
+.btn-outline-premium:hover {
+    background: var(--accent-red);
+    color: white;
+}
+
+/* Tables */
+.table {
+    color: #e0e0e0;
+}
+
+.table thead th {
+    background: #111;
+    border-color: #222;
+    color: #888;
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    letter-spacing: 1px;
+}
+
+.table td {
+    border-color: #1a1a1a;
+    vertical-align: middle;
+}

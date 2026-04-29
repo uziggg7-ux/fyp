@@ -1,44 +1,40 @@
 <?php
 /**
  * mood_mapper.php - Centralized Mood-to-Genre Mapping Protocol
- * 
- * Provides a unified way to map detected moods to TMDB Genre IDs.
- * Always attempts to query the Python AI service first to ensure the
- * AI's logic is the source of truth, with a local fallback.
+ *
+ * Fetches mood-to-genre mappings from the database.
  */
+
+require_once __DIR__ . '/../database/connection.php';
 
 if (!function_exists('get_genre_id_for_mood')) {
     function get_genre_id_for_mood($mood) {
-        $python_api_url = 'http://127.0.0.1:5000/genre?mood=' . urlencode($mood);
+        global $pdo;
 
-        // --- 1. ATTEMPT AI SYNC (PRIMARY) ---
-        $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, $python_api_url);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch, CURLOPT_TIMEOUT, 3); // Quick timeout for seamless fallback
+        try {
+            $stmt = $pdo->prepare("SELECT associated_genres FROM moods WHERE name = ? LIMIT 1");
+            $stmt->execute([ucfirst(strtolower($mood))]);
+            $genre_ids = $stmt->fetchColumn();
 
-        $response = curl_exec($ch);
-        $http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-        curl_close($ch);
-
-        if ($http_code === 200 && $response) {
-            $data = json_decode($response, true);
-            if (isset($data['genre_id'])) {
-                return (int)$data['genre_id'];
+            if ($genre_ids) {
+                // If multiple genres are mapped, pick the first one or handle appropriately
+                $ids = explode(',', $genre_ids);
+                return (int)trim($ids[0]);
             }
+        } catch (Exception $e) {
+            error_log("Database error in mood_mapper: " . $e->getMessage());
         }
 
-        // --- 2. LOCAL FALLBACK PROTOCOL (SECONDARY) ---
-        // Synchronized with python_ai_backend/services/mood_to_genre.py
+        // Local fallback if DB fails or mood not found
         $fallback_map = [
-            'Happy'    => 35,      // Comedy
-            'Sad'      => 18,      // Drama
-            'Angry'    => 28,      // Action
-            'Excited'  => 10751,   // Family
-            'Anxious'  => 53,      // Thriller
-            'Relaxed'  => 10749,   // Romance
-            'Neutral'  => 10752,   // War
-            'Default'  => 35       // Comedy
+            'Happy'    => 35,
+            'Sad'      => 18,
+            'Angry'    => 28,
+            'Excited'  => 10751,
+            'Anxious'  => 53,
+            'Relaxed'  => 10749,
+            'Neutral'  => 10752,
+            'Default'  => 35
         ];
 
         $mood_key = ucfirst(strtolower($mood));

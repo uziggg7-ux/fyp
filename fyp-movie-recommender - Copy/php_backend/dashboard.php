@@ -14,6 +14,15 @@ if (!$user_id) {
 require_once 'includes/config.php';
 require_once 'database/connection.php';
 
+// Check if banned
+$stmt_ban = $pdo->prepare("SELECT is_banned FROM users WHERE user_id = ?");
+$stmt_ban->execute([$user_id]);
+if ($stmt_ban->fetchColumn()) {
+    session_destroy();
+    header("Location: login.php?error=banned");
+    exit();
+}
+
 // Fetch stats for the Overview bar
 try {
     $stmt = $pdo->prepare("SELECT COUNT(*) FROM user_mood_history WHERE user_id = :uid");
